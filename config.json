@@ -1,0 +1,12 @@
+{
+    "ml_tools": ["tensorflow", "keras", "scikit-learn"],
+    "cpp": ["c plus plus", "cpp", "c++", "c"],
+    "python": ["python", "python 3", "Flask", "python 3.12"],
+    "container": ["docker", "image", "container"],
+    "weights": {
+        "cpp": 1.0,
+        "python": 1.0,
+        "ml_tools": 0.8,
+        "container": 0.7
+    }
+}
