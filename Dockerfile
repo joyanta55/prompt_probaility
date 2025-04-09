@@ -16,4 +16,4 @@ EXPOSE 5000
 # Define environment variable (optional)
 
 # Run the application when the container starts
-CMD ["python", "main.py"]
+CMD ["python", "bayesian.py"]
