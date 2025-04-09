@@ -40,7 +40,6 @@ let's assume this is the input from user on the console when you run the code.
 create a cpp docker image
 ```
 Here's the output you would get with current setup.
-## Combined Probability of Category Occurrence (OR of All Keywords):
 
 | **Category**   | **Combined Probability** |
 |----------------|--------------------------|
