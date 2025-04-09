@@ -67,7 +67,7 @@ Here's the result.
 
 Now, based on the input prompt, you can probably guess what the output will be. **Python** should definitely receive a higher probability compared to **C++**, for the same reasons discussed.
 
-Please check the `config.json` file to check the pre classified categories (i.e. *ML Tools*,*C++*, *Python* , *Container*), also the assciated weight, while making probabilistic decisions. Check those out.  
+Please check the `config.json` file to check the pre classified categories (i.e. *ML Tools*,*C++*, *Python* , *Container*), also the assciated `weight`, while making probabilistic decisions. Check those out.  
 
 
 
