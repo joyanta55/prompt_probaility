@@ -44,10 +44,8 @@ Here's the output you would get with current setup.
 
 | **Category**   | **Combined Probability** |
 |----------------|--------------------------|
-| **ML Tools**   | 0.2979                   |
 | **C++**        | 0.4829                   |
 | **Python**     | 0.4671                   |
-| **Container**  | 0.3278                   |
 
 ### Observations:
 You might question why **Python** has a near-equal probability to **C++** even though the prompt doesn't mention `python`. This outcome arises from the nature of the **`en_core_web_md`** model in **spaCy** [https://spacy.io/models/en#en_core_web_md]. In general, when discussing **Docker**-based solutions, there is a strong association with **Python** due to its widespread use in **web frameworks** and **machine learning libraries**.
@@ -61,10 +59,8 @@ Here's the result.
 
 | **Category**   | **Combined Probability** |
 |----------------|--------------------------|
-| **ML Tools**   | 0.3059                  |
 | **C++**        | 0.4941                  |
 | **Python**     | 0.5406                  |
-| **Container**  | 0.3189                  |
 
 Now, based on the input prompt, you can probably guess what the output will be. **Python** should definitely receive a higher probability compared to **C++**, for the same reasons discussed.
 
