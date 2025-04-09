@@ -49,7 +49,7 @@ Here's the output you would get with current setup.
 | **Container**  | 0.3278                   |
 
 ### Observations:
-You might question why **Python** has a near-equal probability to **C++** even though the prompt doesn't mention `python`. This outcome arises from the nature of the **`en_core_web_md`** model in **spaCy** [https://spacy.io/models/en]. In general, when discussing **Docker**-based solutions, there is a strong association with **Python** due to its widespread use in **web frameworks** and **machine learning libraries**.
+You might question why **Python** has a near-equal probability to **C++** even though the prompt doesn't mention `python`. This outcome arises from the nature of the **`en_core_web_md`** model in **spaCy** [https://spacy.io/models/en#en_core_web_md]. In general, when discussing **Docker**-based solutions, there is a strong association with **Python** due to its widespread use in **web frameworks** and **machine learning libraries**.
 The model reflects this contextual connection, which results in a higher probability for **Python** despite the lack of explicit mentions. This showcases how the model uses **word embeddings** and **Bayesian inference** to capture underlying relationships between words and concepts in the text, even when they aren't directly stated.
 
 Lets work with another prompt
