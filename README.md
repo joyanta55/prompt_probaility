@@ -31,7 +31,8 @@ Follwed by
 docker run -it propmtprobability
 ```
 ### What it does
-This work implements a `Bayesian-based` keyword similarity model using word embeddings from the open-source `en_core_web_md` model by `spaCy`. It calculates `posterior probabilities` for Python and C++ keywords based on user input, applying Maximum Likelihood Estimation (MLE) for parameter estimation. The model dynamically adjusts the relevance of these categories using configurable weights in a JSON file. Currently limited to `Python` and `C/C++`, the system is designed to be easily extended to support additional categories, such as machine learning tools (e.g., TensorFlow, PyTorch), with test cases ensuring its robustness and flexibility for future growth. Working on just as a modular part of another project.
+This code evaluates the relevance of predefined keyword lists (e.g., `cpp, python`) in a given prompt. It uses the `en_core_web_md` word embedding model from `spaCy` to compute similarity between the input and the keyword list. The model outputs `posterior probabilitie`s (derived from Bayesian inference) for each keyword, where the probability reflects the `maximum likelihood` of a match between the input and the predefined categories (e.g., `cpp, python`).
+
 
 ## Example prompt with output
 Current design works on very few set of keywords (i.e. "docker", "cpp", "python"), if your prompt input contains any other words, please change in the `config.json` file.
