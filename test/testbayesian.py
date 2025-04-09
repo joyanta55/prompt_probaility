@@ -8,7 +8,7 @@ from bayesian import BayesianKeywordSimilarity
 
 class TestBayesianKeywordSimilarity(unittest.TestCase):
 
-    def setUp(self):
+    def setUp(self,cpp_weight = 1.0, python_weight=1.0):
         """
         Setup method for initializing test environment with dynamic configurations.
         """
@@ -19,8 +19,8 @@ class TestBayesianKeywordSimilarity(unittest.TestCase):
             "python": ["python", "python 3", "Flask", "python 3.12"],
             "container": ["docker", "image", "container"],
             "weights": {
-                "cpp": 1.0,
-                "python": 0.9,
+                "cpp": cpp_weight,
+                "python": python_weight,
                 "ml_tools": 0.0,
                 "container": 0.0
             }
@@ -44,31 +44,65 @@ class TestBayesianKeywordSimilarity(unittest.TestCase):
 
     def test_valid_language_matches_cpp(self):
         # Modify the configuration for this specific test case if needed
-        self.data['weights']['cpp'] = 1.5  # Boost cpp weight for this test case
-        self.setUp()  # Reinitialize with modified configuration
+        self.data['weights']['cpp'] = 1.0  # Default cpp weight for this test case
+        self.data['weights']['python'] = 1.0  # Default python weight for this test case
 
+        self.setUp()  # Reinitialize with modified configuration
         input_prompt = "create a cpp docker image"
         category_posteriors, combined_probabilities = self.keyword_similarity.get_similarity(input_prompt)
         self.assertGreater(combined_probabilities['cpp'], combined_probabilities['python'], "Expected higher probability for 'cpp'")
+    
 
     def test_valid_language_matches_python(self):
         # Modify the configuration for this specific test case if needed
-        self.data['weights']['python'] = 1.5  # Boost python weight for this test case
-        self.setUp()  # Reinitialize with modified configuration
+        self.data['weights']['cpp'] = 1.0  # Default cpp weight for this test case
+        self.data['weights']['python'] = 1.0  # Default python weight for this test case
 
-        input_prompt = "create a python based hello world docker image"
+        self.setUp()  # Reinitialize with modified configuration
+        input_prompt = "create a python cpp based hello world docker image"
         category_posteriors, combined_probabilities = self.keyword_similarity.get_similarity(input_prompt)
         self.assertGreater(combined_probabilities['python'], combined_probabilities['cpp'], "Expected higher probability for 'python'")
 
+
     def test_valid_language_matches_both(self):
-        # Modify the configuration for this specific test case if needed
+        # If both cpp and python are used in prompt, keyword python would get higher probability due to more relevance with docker.
+
         self.data['weights']['cpp'] = 1.0  # Default cpp weight for this test case
         self.data['weights']['python'] = 1.0  # Default python weight for this test case
-        self.setUp()  # Reinitialize with modified configuration
 
+        self.setUp()  # Reinitialize with modified configuration
         input_prompt = "create python cpp hello world docker image"
         category_posteriors, combined_probabilities = self.keyword_similarity.get_similarity(input_prompt)
         self.assertGreater(combined_probabilities['python'], combined_probabilities['cpp'], "Expected higher probability for 'python'")
+    
+
+
+    def test_valid_language_matches_both_no_mention(self):
+        # If no mention of language python will get preference due to docker keyword
+
+        self.setUp(cpp_weight=1.0, python_weight=0.8)  # Reinitialize with modified configuration
+        input_prompt = "create a cpp python docker image"
+        category_posteriors, combined_probabilities = self.keyword_similarity.get_similarity(input_prompt)
+        self.assertGreater(combined_probabilities['cpp'], combined_probabilities['python'], "Expected higher probability for 'cpp'")
+    
+
+    # Set weight values to get cpp related keyword to get more weight, to override the base spacy vector.
+    def test_valid_language_matches_both_no_mention_cpp(self):
+        # If no mention of language and you want more priority/weight on cpp.
+
+        self.setUp(cpp_weight=1.0, python_weight=0.8)  # Reinitialize with modified configuration
+        input_prompt = "create docker image"
+        category_posteriors, combined_probabilities = self.keyword_similarity.get_similarity(input_prompt)
+        self.assertGreater(combined_probabilities['cpp'], combined_probabilities['python'], "Expected higher probability for 'cpp'")
+
+    def test_valid_language_matches_both_both_mention_cpp(self):
+        # If both of cpp and python are put as prompt, but you want more priority on cpp
+
+        self.setUp(cpp_weight=1.0, python_weight=0.8)  # Reinitialize with modified configuration
+        input_prompt = "create a cpp python docker image"
+        category_posteriors, combined_probabilities = self.keyword_similarity.get_similarity(input_prompt)
+        self.assertGreater(combined_probabilities['cpp'], combined_probabilities['python'], "Expected higher probability for 'cpp'")
+    
 
     
 
