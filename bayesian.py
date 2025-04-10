@@ -3,7 +3,6 @@ from sklearn.metrics.pairwise import cosine_similarity
 import re
 import json
 import numpy as np
-from src.generate_cpp_docker import CppFileHandler
 
 
 class BayesianKeywordSimilarity:
@@ -198,20 +197,27 @@ def load_config(file_path="config.json"):
         data = json.load(file)
 
     predefined_keywords = {
-        "ml_tools": data["ml_tools"],
-        "cpp": data["cpp"],
-        "python": data["python"],
-        "container": data["container"],
+        "ml_tools": data["ml_tools"]["positives"],
+        "cpp": data["cpp"]["positives"],
+        "python": data["python"]["positives"],
+        "container": data["container"]["positives"],
+    }
+
+    predefined_keywords_negative = {
+        "ml_tools": data["ml_tools"]["negatives"],
+        "cpp": data["cpp"]["negatives"],
+        "python": data["python"]["negatives"],
+        "container": data["container"]["negatives"],
     }
 
     weights = data["weights"]  # Extracting weights for each category
 
-    return predefined_keywords, weights
+    return predefined_keywords, weights, predefined_keywords_negative
 
 
 def main():
     # Load predefined keywords and weights from config.json
-    predefined_keywords, weights = load_config("config.json")
+    predefined_keywords, weights , _ = load_config("config.json")
 
     keyword_similarity = BayesianKeywordSimilarity(predefined_keywords, weights)
 
