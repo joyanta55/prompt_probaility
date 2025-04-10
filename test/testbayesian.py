@@ -44,8 +44,6 @@ class TestBayesianKeywordSimilarity(unittest.TestCase):
 
     def test_valid_language_matches_cpp(self):
         # Modify the configuration for this specific test case if needed
-        self.data['weights']['cpp'] = 1.0  # Default cpp weight for this test case
-        self.data['weights']['python'] = 1.0  # Default python weight for this test case
 
         self.setUp()  # Reinitialize with modified configuration
         input_prompt = "create a cpp docker image"
@@ -55,8 +53,6 @@ class TestBayesianKeywordSimilarity(unittest.TestCase):
 
     def test_valid_language_matches_python(self):
         # Modify the configuration for this specific test case if needed
-        self.data['weights']['cpp'] = 1.0  # Default cpp weight for this test case
-        self.data['weights']['python'] = 1.0  # Default python weight for this test case
 
         self.setUp()  # Reinitialize with modified configuration
         input_prompt = "create a python cpp based hello world docker image"
@@ -65,10 +61,7 @@ class TestBayesianKeywordSimilarity(unittest.TestCase):
 
 
     def test_valid_language_matches_both(self):
-        # If both cpp and python are used in prompt, keyword python would get higher probability due to more relevance with docker.
-
-        self.data['weights']['cpp'] = 1.0  # Default cpp weight for this test case
-        self.data['weights']['python'] = 1.0  # Default python weight for this test case
+        # If both cpp and python are used in prompt, keyword python would get higher probability due to more relevance with docker
 
         self.setUp()  # Reinitialize with modified configuration
         input_prompt = "create python cpp hello world docker image"
