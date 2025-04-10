@@ -2,11 +2,16 @@
     "ml_tools": ["tensorflow", "keras", "scikit-learn"],
     "cpp": ["c plus plus", "cpp", "c++", "c"],
     "python": ["python", "python 3", "Flask", "python 3.12"],
+    "security_scanner": ["bandit"],
     "container": ["docker", "image", "container"],
     "weights": {
         "cpp": 1.0,
         "python": 1.0,
         "ml_tools": 0.8,
         "container": 0.7
+    },
+    "threshold": {
+        "cpp": 0.5,
+        "python": 0.5
     }
 }
