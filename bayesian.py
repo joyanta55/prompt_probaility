@@ -237,7 +237,7 @@ def main():
 
         # If result is valid (a tuple containing category_posteriors and combined_probabilities)
         stat = BayesianKeywordSimilarityStat(result)
-        # stat.display()
+        stat.display()
         print(stat.return_higher_probability("cpp", "python"))
 
 
