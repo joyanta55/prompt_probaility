@@ -3,6 +3,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 import re
 import json
 import numpy as np
+from src.generate_cpp_docker import CppFileHandler
 
 class BayesianKeywordSimilarity:
     def __init__(self, predefined_keywords, weights, threshold=0.5, boost_factor=0.02):
@@ -104,6 +105,34 @@ class BayesianKeywordSimilarity:
                 return True
         return False
 
+
+class BayesianKeywordSimilarityStat:
+    def __init__(self, result=None):
+        # Load the spaCy medium-sized model (which includes word vectors)
+        self.result = result
+        
+
+    def display(self):
+    
+        category_posteriors, combined_probabilities = self.result
+
+        if combined_probabilities is None:
+            print("Not a valid prompt. Please include 'docker image' or a programming language like 'python', 'cpp', etc.")
+            return
+
+        # Display the result by category
+        # print("\nMost Similar Keywords to Input Text (Ranked by Posterior Probability):")
+        # for category, sorted_keywords in category_posteriors.items():
+        #     print(f"\nCategory: {category.capitalize()}")
+        #     for keyword, score in sorted_keywords:
+        #         print(f"  Keyword: {keyword}, Posterior Probability: {score}")
+        
+        print("\nCombined Probability of Category Occurrence (OR of All Keywords):")
+        for category, combined_prob in combined_probabilities.items():
+            print(f"  Category: {category.capitalize()}, Combined Probability: {combined_prob:.4f}")
+
+    
+
 def load_config(file_path='config.json'):
     """
     Loads configuration from a JSON file. The config includes predefined keywords
@@ -123,11 +152,12 @@ def load_config(file_path='config.json'):
 
     return predefined_keywords, weights
 
+
+
 def main():
     # Load predefined keywords and weights from config.json
     predefined_keywords, weights = load_config('config.json')
 
-    # Create an instance of BayesianKeywordSimilarity
     keyword_similarity = BayesianKeywordSimilarity(predefined_keywords, weights)
 
     print("Bayesian Keyword Similarity Analysis")
@@ -151,22 +181,8 @@ def main():
             continue  # Continue the loop to get the next input
 
         # If result is valid (a tuple containing category_posteriors and combined_probabilities)
-        category_posteriors, combined_probabilities = result
-
-        if combined_probabilities is None:
-            print("Not a valid prompt. Please include 'docker image' or a programming language like 'python', 'cpp', etc.")
-            continue
-
-        # Display the result by category
-        # print("\nMost Similar Keywords to Input Text (Ranked by Posterior Probability):")
-        # for category, sorted_keywords in category_posteriors.items():
-        #     print(f"\nCategory: {category.capitalize()}")
-        #     for keyword, score in sorted_keywords:
-        #         print(f"  Keyword: {keyword}, Posterior Probability: {score}")
-        
-        print("\nCombined Probability of Category Occurrence (OR of All Keywords):")
-        for category, combined_prob in combined_probabilities.items():
-            print(f"  Category: {category.capitalize()}, Combined Probability: {combined_prob:.4f}")
+        stat = BayesianKeywordSimilarityStat(result)
+        stat.display()
 
 
 
