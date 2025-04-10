@@ -1,9 +1,24 @@
 {
-    "ml_tools": ["tensorflow", "keras", "scikit-learn"],
-    "cpp": ["c plus plus", "cpp", "c++", "c"],
-    "python": ["python", "python 3", "Flask", "python 3.12"],
-    "security_scanner": ["bandit"],
-    "container": ["docker", "image", "container"],
+    "ml_tools": {
+        "positives": ["tensorflow", "keras", "scikit-learn"],
+        "negatives": ["excel", "wikipedia"]
+    },
+    "cpp": {
+        "positives": ["c plus plus", "cpp", "c++", "c"],
+        "negatives": ["java", "python", "ruby"]
+    },
+    "python": {
+        "positives": ["python", "python 3", "Flask", "python 3.12"],
+        "negatives": ["cpp", "java", "ruby", "c++"]
+    },
+    "security_scanner":{
+        "positives": ["bandit"],
+        "negatives": ["virtual machine", "door locks"]
+    },
+    "container": {
+        "positives": ["docker", "image", "container"],
+        "negatives": ["bowl", "box", "bucket", "holder"]
+    },
     "weights": {
         "cpp": 1.0,
         "python": 1.0,
