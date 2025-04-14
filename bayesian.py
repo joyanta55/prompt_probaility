@@ -42,14 +42,6 @@ class BayesianKeywordSimilarity:
             keyword_vectors = self.keyword_vectors[category]
             similarities = cosine_similarity([input_vector], keyword_vectors)
 
-            # if similarities < 0.1:
-            #     similarities = 0
-
-            # Rescale cosine similarity to be in the range [0, 1]
-            # similarities = (
-            #     similarities + 1
-            # ) / 2  # Transform similarity from [-1, 1] to [0, 1]
-
             # Sort by similarity score in descending order
             sorted_similarities_idx = similarities.argsort()[0][::-1]
             ranked_keywords = [
