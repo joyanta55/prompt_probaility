@@ -5,18 +5,18 @@
     },
     "cpp": {
         "positives": ["c plus plus", "cpp", "c++", "c"],
-        "negatives": ["java", "python", "ruby"]
+        "negatives": ["python"]
     },
     "python": {
         "positives": ["python", "python 3", "Flask", "python 3.12"],
-        "negatives": ["cpp", "java", "ruby", "c++"]
+        "negatives": ["cpp"]
     },
     "security_scanner":{
         "positives": ["bandit"],
         "negatives": ["virtual machine", "door locks"]
     },
     "container": {
-        "positives": ["docker", "image", "container"],
+        "positives": ["docker", "image", "container","docker image"],
         "negatives": ["bowl", "box", "bucket", "holder"]
     },
     "weights": {
@@ -25,8 +25,5 @@
         "ml_tools": 0.8,
         "container": 0.7
     },
-    "threshold": {
-        "cpp": 0.5,
-        "python": 0.5
-    }
+    "threshold": 0.2
 }

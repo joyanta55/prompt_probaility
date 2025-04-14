@@ -3,6 +3,7 @@ __pycache__/
 
 # Ignore Python virtual environment
 venv/
+myvenv/
 .config.json.swp
 .python-version
 .idea/
