@@ -6,7 +6,7 @@ import numpy as np
 
 
 class BayesianKeywordSimilarity:
-    def __init__(self, predefined_keywords, weights, threshold=0.2, boost_factor=0.1):
+    def __init__(self, predefined_keywords, weights, threshold=0.2, boost_factor=0.5):
         # Load the spaCy medium-sized model (which includes word vectors)
         self.nlp = spacy.load("en_core_web_md")
         self.predefined_keywords = predefined_keywords
