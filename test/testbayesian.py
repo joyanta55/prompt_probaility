@@ -93,12 +93,12 @@ class TestBayesianKeywordSimilarity(unittest.TestCase):
         # If you want to put such priority on the exact key match. boost_factor is the key.
 
         self.setUp(cpp_weight=1.0, python_weight=1.0)  # Cosine similarity threshold, if below 0.4 dont consider the similarity. Also if exact keyword match then increase the similarity by 0.2.
-        input_prompt = "create cpp docker image that has hello world web socket implemented like tornado." #here tornado is a python framework
+        input_prompt = "create cpp docker image that has hello world web socket implemented like tornado. expose the program to the outer world" #here tornado is a python framework
         _, combined_probabilities = self.keyword_similarity.get_similarity(input_prompt)
         self.assertGreater(combined_probabilities['python'], combined_probabilities['cpp'], "Expected higher probability for 'cpp'")
 
-        self.setUp(cpp_weight=1.0, python_weight=1.0, boost_factor=0.2)  # boost factor, since "cpp" is a category in out config.json, so there would be exact match and tornado will be less prioritize.  
-        input_prompt = "create cpp docker image that has hello world web socket implemented like tornado." #here tornado is a python framework
+        self.setUp(cpp_weight=1.0, python_weight=1.0, boost_factor=0.3)  # boost factor, since "cpp" is a category in out config.json, so there would be exact match and tornado will be less prioritize.  
+        input_prompt = "create cpp docker image that has hello world web socket implemented like tornado. expose the program to the outer world" #here tornado is a python framework, but cpp is a exact match
         _, combined_probabilities = self.keyword_similarity.get_similarity(input_prompt)
         self.assertGreater(combined_probabilities['cpp'], combined_probabilities['python'], "Expected higher probability for 'cpp'")
 
