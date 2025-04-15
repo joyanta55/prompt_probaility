@@ -2,16 +2,21 @@ import spacy
 from sklearn.metrics.pairwise import cosine_similarity
 import re
 import json
-import numpy as np
 
 
 class BayesianKeywordSimilarity:
     def __init__(self, predefined_keywords, weights, threshold=0.2, boost_factor=0.5):
+        """
+        @param predefined_keywords: the relevant keywords that are defined in the config file.
+        @param weights:
+        @param threshold: if the confidence score is less than the threshold, then similarity is 0
+        @param boost_factor: when there's an exact keyword match that we want to prioritize - the score will be boosted
+        """
         # Load the spaCy medium-sized model (which includes word vectors)
         self.nlp = spacy.load("en_core_web_md")
         self.predefined_keywords = predefined_keywords
         self.predefined_keywords_negative = predefined_keywords
-        self.threshold = threshold;
+        self.threshold = threshold
         self.weights = weights  # Weights for each category
         self.threshold = threshold
         self.boost_factor = boost_factor  # Configurable boost factor
@@ -49,7 +54,7 @@ class BayesianKeywordSimilarity:
             ]
 
             # Boost similarity for exact matches (container and language terms)
-            if category == "python" or category == "container" or category == "cpp":
+            if category in self.predefined_keywords.keys():
                 for idx, (keyword, score) in enumerate(ranked_keywords):
                     if keyword.lower() in input_text.lower():
                         ranked_keywords[idx] = (
@@ -61,19 +66,14 @@ class BayesianKeywordSimilarity:
             weight = self.weights.get(
                 category, 1.0
             )  # Default to 1.0 if no specific weight is found
-            weighted_ranked_keywords = [
-                (keyword, score * weight) for keyword, score in ranked_keywords
-            ]
 
             # Apply threshold for the category based on the config file
             weighted_ranked_keywords = [(keyword, score * weight if score >= self.threshold else 0) for keyword, score in ranked_keywords]
-
 
             category_similarities[category] = weighted_ranked_keywords
 
             # print("cosine for "+category+"----")
             # print(weighted_ranked_keywords)
-
 
             # Apply Bayesian Update for each keyword and sort by posterior probability
             posterior_probabilities = []
@@ -208,7 +208,6 @@ def load_config(file_path="config.json"):
         "container": data["container"]["positives"],
     }
 
-
     weights = data["weights"]  # Extracting weights for each category
 
     threshold = data["threshold"]
@@ -221,7 +220,7 @@ def main():
     predefined_keywords, weights , threshold  = load_config("config.json")
 
     keyword_similarity = BayesianKeywordSimilarity(predefined_keywords=predefined_keywords, weights= weights, threshold=threshold)
-    print("Bayesian Keyword Similarity Analysis")
+    print("Bayesian Keyword Similarity Analysis. Please keep the prompt size minimum, upto 20 words max.")
     print("Type 'exit' to quit the program.\n")
 
     while True:
